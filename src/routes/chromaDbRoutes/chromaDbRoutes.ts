@@ -10,5 +10,5 @@ const router = Router();
 router.post("/upload", authMiddleware, uploadPDFSingle, uploadPDF);
 router.post("/chat", authMiddleware, searchVectorIndex);
 router.delete("/delete", authMiddleware, deleteCollectionVector);
-router.get("/read", readAllCollection);
+router.get("/read", authMiddleware, readAllCollection);
 export default router;
