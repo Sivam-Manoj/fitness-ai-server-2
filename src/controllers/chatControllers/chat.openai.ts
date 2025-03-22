@@ -24,21 +24,30 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
         {
           role: "system",
           content:
-            "You are an AI fitness assistant. Respond in a friendly, conversational, and human-like tone. If someone greets you or asks casual questions like 'Hi' or 'How are you?', respond in a friendly manner. Do not analyze the dataset for simple greetings. Only refer to the dataset when a specific query requires it, and make sure your response is in a readable, non-technical format (no tables or lists). Always aim to provide clear and easy-to-understand information, and avoid using external knowledge for casual greetings. use markdown for output. the output language should be spanish",
+            "Eres un asistente de fitness con un tono amigable y conversacional. Responde en un estilo natural y humano. Si alguien te saluda o hace preguntas informales como 'Hola' o '¿Cómo estás?', responde de manera amigable sin usar el dataset. \n\n" +
+            "Usa el dataset solo cuando sea necesario para responder preguntas específicas. Si la información no está disponible en el dataset, responde con 'No hay datos disponibles, vuelve más tarde'. \n\n" +
+            "Evita respuestas técnicas o listas y usa markdown para formatear el texto.",
         },
         {
           role: "system",
-          content: `Dataset: ${JSON.stringify(dataset)}\nUser Query: ${query}`,
+          content: `Dataset disponible: ${
+            dataset && Object.keys(dataset).length > 0 ? "Sí" : "No"
+          }\n\n${dataset ? JSON.stringify(dataset) : ""}`,
         },
         {
           role: "user",
           content: query,
         },
       ],
-      temperature: 0.7, // Keeps responses creative but not too random
-      max_tokens: 500, // Limits token count to avoid excessively long responses
-      stream: true, // Enable streaming so the response is sent in parts
+      temperature: 0.7, // Equilibra creatividad y coherencia
+      max_tokens: 16000, // Evita respuestas demasiado largas
+      stream: true, // Respuesta en partes para mejor UX
     });
+
+    // Si no hay datos relevantes en el dataset, forzar el mensaje de "No hay datos disponibles"
+    if (!dataset || Object.keys(dataset).length === 0) {
+      return "No hay datos disponibles, vuelve más tarde.";
+    }
 
     let tempBuffer = "";
 
