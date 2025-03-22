@@ -30,16 +30,18 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
         },
         {
           role: "system",
-          content: `Dataset: ${JSON.stringify(dataset)}\nUser Query: ${query}`,
+          content: `Dataset disponible: ${
+            dataset && Object.keys(dataset).length > 0 ? "Sí" : "No"
+          }\n\n${dataset ? JSON.stringify(dataset) : ""}`,
         },
         {
           role: "user",
           content: query,
         },
       ],
-      temperature: 0.7, // Keeps responses creative but not too random
-      max_tokens: 4096, // Limits token count to avoid excessively long responses
-      stream: true, // Enable streaming so the response is sent in parts
+      temperature: 0.7, // Equilibra creatividad y coherencia
+      max_tokens: 4096, // Evita respuestas demasiado largas
+      stream: true, // Respuesta en partes para mejor UX
     });
 
     let tempBuffer = "";
