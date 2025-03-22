@@ -19,7 +19,7 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
     // Enhance the user query before sending to OpenAI
 
     const stream = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4.5-preview",
       messages: [
         {
           role: "system",
@@ -46,7 +46,7 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
         },
       ],
       temperature: 0.7, // Equilibra creatividad y coherencia
-      max_tokens: 4096, // Evita respuestas demasiado largas
+      max_tokens: 16000, // Evita respuestas demasiado largas
       stream: true, // Respuesta en partes para mejor UX
     });
 
