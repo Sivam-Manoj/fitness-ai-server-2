@@ -19,7 +19,7 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
     // Enhance the user query before sending to OpenAI
 
     const stream = await openai.chat.completions.create({
-      model: "gpt-4.5-preview",
+      model: "gpt-4-turbo",
       messages: [
         {
           role: "system",
