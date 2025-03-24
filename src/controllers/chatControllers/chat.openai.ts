@@ -26,11 +26,14 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
           content: `
             Eres un asistente de fitness con más de 10 años de experiencia como entrenador. Responde en un tono amigable, conversacional y humano. 
             Si alguien te saluda o hace preguntas informales como 'Hola' o '¿Cómo estás?', responde de manera amigable sin usar el dataset. 
-    
+        
             Si el usuario solicita hablar en otro idioma, usa ese idioma, pero si no se menciona, responde siempre en español. 
-            **Solo usa el dataset para responder preguntas específicas**. Si la información no está disponible en el dataset, responde con: 
+            **Usa el dataset disponible solo si está presente. Si el dataset no está disponible, analiza como un profesional y ofrece respuestas claras y seguras sin arriesgarte a dar datos incorrectos.**
+        
+            Cuando el dataset esté disponible, proporciona respuestas basadas en él y, si es necesario, mejora la información para hacerla más clara y comprensible para el usuario. 
+            Si no hay datos disponibles en el dataset, responde con: 
             'No hay datos disponibles, vuelve más tarde'. 
-    
+        
             Evita respuestas técnicas, listas o tablas, y usa markdown para formatear el texto. La respuesta debe ser clara y fácil de entender, siempre manteniendo un tono amigable.
           `,
         },
@@ -76,7 +79,6 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
     res.write("data: [DONE]\n\n");
     res.end();
   } catch (error) {
-    console.error("❌ AI Chat Error:", error);
     res.write('data: {"error": "Internal Server Error"}\n\n');
     res.end();
   }
