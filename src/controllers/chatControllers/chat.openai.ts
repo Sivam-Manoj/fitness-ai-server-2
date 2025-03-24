@@ -45,7 +45,6 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
           content: query,
         },
       ],
-      temperature: 0.7, // Equilibra creatividad y coherencia
       max_tokens: 16000, // Evita respuestas demasiado largas
       stream: true, // Respuesta en partes para mejor UX
     });
