@@ -25,7 +25,7 @@ export const uploadPDF = asyncHandler(
       }
 
       // ✅ Split extracted text into smaller chunks
-      const textChunks = splitTextIntoChunks(extractedText, 100); // Each chunk ~100 characters
+      const textChunks = splitTextIntoChunks(extractedText, 500); // Each chunk ~100 characters
       if (!textChunks.length) {
         throw new Error("No valid text chunks extracted from PDF.");
       }
