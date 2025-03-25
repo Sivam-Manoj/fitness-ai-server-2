@@ -16,10 +16,8 @@ const aichatStream = async (query: string, dataset: any, res: Response) => {
   }
 
   try {
-    // Enhance the user query before sending to OpenAI
-
     const stream = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
       messages: [
         {
           role: "system",
